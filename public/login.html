@@ -1,0 +1,112 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8">
+<title>卡密后台登录</title>
+
+<style>
+body{
+    margin:0;
+    background:#181818;
+    display:flex;
+    justify-content:center;
+    align-items:center;
+    height:100vh;
+    font-family:Arial;
+}
+
+.box{
+    width:360px;
+    background:#242424;
+    padding:30px;
+    border-radius:12px;
+}
+
+h2{
+    color:white;
+    text-align:center;
+}
+
+input{
+    width:100%;
+    padding:12px;
+    margin-top:15px;
+    border:none;
+    border-radius:8px;
+    font-size:16px;
+}
+
+button{
+    width:100%;
+    padding:12px;
+    margin-top:20px;
+    background:#2f7df6;
+    color:white;
+    border:none;
+    border-radius:8px;
+    font-size:16px;
+    cursor:pointer;
+}
+
+button:hover{
+    background:#1864d6;
+}
+</style>
+
+</head>
+
+<body>
+
+<div class="box">
+
+<h2>卡密后台</h2>
+
+<input id="username" placeholder="用户名">
+
+<input id="password" type="password" placeholder="密码">
+
+<button onclick="login()">登录</button>
+
+</div>
+
+<script>
+
+async function login(){
+
+const res=await fetch("/auth/login",{
+
+method:"POST",
+
+headers:{
+"Content-Type":"application/json"
+},
+
+body:JSON.stringify({
+
+username:document.getElementById("username").value,
+
+password:document.getElementById("password").value
+
+})
+
+});
+
+const data=await res.json();
+
+alert(data.message);
+
+if(data.token){
+
+localStorage.token=data.token;
+
+window.location="/admin.html";
+
+}
+
+}
+
+</script>
+
+</body>
+
+</html>
